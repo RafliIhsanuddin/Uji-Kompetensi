@@ -11,11 +11,37 @@ public class TimeManager : MonoBehaviour
 
     public TextMeshProUGUI timeText;
 
+    //public GameObject PlayerUI;
+
+    public GameObject GameOverUI;
+
+
+    public GameObject Camera;
+
+    private Animator animCam;
+
+    public GameObject player;
+
+    private Animator animPlayer;
+
+    public GameObject bgmPlay;
+
+    public GameObject bgmGameOver;
+
+    private void Awake()
+    {
+        animCam = Camera.GetComponent<Animator>();
+        animPlayer = Camera.GetComponent<Animator>();
+        
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        bgmGameOver.SetActive(false);
+        bgmPlay.SetActive(true);
+        //PlayerUI.SetActive(true);
+        GameOverUI.SetActive(false);
     }
 
     // Update is called once per frame
@@ -24,8 +50,11 @@ public class TimeManager : MonoBehaviour
 
         if(TimeRemaining >= 0)
         {
+            
+
             TimeRemaining -= Time.deltaTime;
 
+            
             
 
             timeText.text = "Time : " + TimeRemaining.ToString();
@@ -36,7 +65,12 @@ public class TimeManager : MonoBehaviour
             {
                 TimeRemaining = 0;
             }
+            bgmPlay.SetActive(false);
+            bgmGameOver.SetActive(true);
             timeText.text = "Time : " + TimeRemaining.ToString();
+            animCam.SetInteger("state", 4);
+            //animPlayer.SetInteger("state", 4);
+            GameOverUI.SetActive(true);
         }
 
 
